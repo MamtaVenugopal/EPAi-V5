@@ -19,7 +19,7 @@ class SmartDevice:
   cat_5 = {'Speaker', 'Camera', 'Router'}  # phone or computer smart devices
   cat_6 = {'Vacuum'}
 
-  def __init__(self, device_name: str, model_number: str, is_online: bool = False, status: dict = None):
+  def __init__(self, device_name: str, model_number: str, is_online: bool = False, status: dict = {}):
         # Check categories and increment counts
         categories = [SmartDevice.cat_1, SmartDevice.cat_2, SmartDevice.cat_3, SmartDevice.cat_4, SmartDevice.cat_5, SmartDevice.cat_6]
         category_names = ["cat_1", "cat_2", "cat_3", "cat_4", "cat_5", "cat_6"]
