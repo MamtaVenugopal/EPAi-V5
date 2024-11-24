@@ -13,7 +13,6 @@ jobs:
       with:
         python-version: '3.10'
     - name: Install dependencies
-      run: pip install pytest
-      run: pip install typeguard
+      run: pip install -r pytest -r typeguard
     - name: Run tests
       run: pytest S19/test_smart_device.py
