@@ -15,4 +15,4 @@ jobs:
     - name: Install dependencies
       run: pip install pytest
     - name: Run tests
-      run: pytest test_smart_device.py
+      run: pytest S19/test_smart_device.py
