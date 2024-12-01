@@ -1,6 +1,6 @@
 import pytest
 
-from classes_code import Person, Circle
+from classes_code import Person, Circle,DynamicClass,ValidatedAttribute 
 def test_person():
     person = Person('John', 'Doe', 1990)
     assert person.age == 34  # Assuming the current year is 2024
