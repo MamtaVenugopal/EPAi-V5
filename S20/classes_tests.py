@@ -24,5 +24,23 @@ def test_circle():
     with pytest.raises(ValueError):
         circle.radius = -1  # Should raise an error for negative radius
 
+
+def test_dynamic_class():
+    dynamic_obj = DynamicClass()
+    dynamic_obj.dynamic_attr('name', 'Dynamic Object')
+    assert dynamic_obj.name == 'Dynamic Object'
+
+def test_validated_attribute():
+    validated_attr = ValidatedAttribute()
+    validated_attr.value = 100
+    print(validated_attr.value)
+    assert validated_attr.value == 100
+    validated_attr.value = -10
+    print(validated_attr.value)
+
+    with pytest.raises(ValueError):
+        validated_attr.value = -10  # Should raise error for negative value
 test_person()
 test_circle()
+test_dynamic_class()
+test_validated_attribute()

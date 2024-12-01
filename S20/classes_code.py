@@ -102,3 +102,43 @@ class Circle:
     def set_radius(self, new_radius):  # Added set_radius method
         """Sets the radius and recalculates diameter and area."""
         self.radius = new_radius  # Utilize the radius setter for validation    
+class ValidatedAttribute:
+    """
+    A descriptor that validates the assigned value to be a positive integer.
+    """
+    def __init__(self):
+        self.value = 0
+    def __get__(self, obj, type=None) -> object:
+        return self.value
+    def __set__(self, obj, value) -> None:
+        if value < 0 :
+            raise ValueError("The value cannot be negative")
+        self.value = value
+
+class DynamicClass:
+    """
+    A class that allows dynamic creation and access of attributes.
+    """
+    static_value = "Static Value"
+    #validated_attr = ValidatedAttribute("validated_attr")  # Using the descriptor
+
+    def __init__(self, **kwargs):
+        """
+        Initializes a new DynamicClass instance.
+
+        Args:
+            **kwargs: Keyword arguments representing initial dynamic attributes.
+        """
+        for name, value in kwargs.items():
+            setattr(self, name, value)  # Dynamically set attributes
+
+    def dynamic_attr(self, name, value):
+        """
+        Dynamically adds an attribute to the instance.
+
+        Args:
+            name (str): The name of the attribute to add.
+            value: The value of the attribute.
+        """
+        setattr(self, name, value)  # Dynamically set attribute
+        
