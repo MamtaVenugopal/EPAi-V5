@@ -102,26 +102,6 @@ class Circle:
     def set_radius(self, new_radius):  # Added set_radius method
         """Sets the radius and recalculates diameter and area."""
         self.radius = new_radius  # Utilize the radius setter for validation    
-class Descriptor(object):
-    """
-    A descriptor that validates the assigned value to be a positive integer.
-    """
-
-    def __init__(self, attr_name=None):  # Changed name to attr_name
-        self.attr_name = attr_name
-
-    def __get__(self, instance, owner):
-        if instance is None:
-            return self
-        return instance.__dict__.get(self.attr_name)
-
-    def __set__(self, instance, value):
-        if not isinstance(value, int) or value <= 0:  # Corrected the condition
-            raise ValueError("Attribute must be a positive integer.")
-        instance.__dict__[self.attr_name] = value
-
-class ValidatedAttribute(object):
-    value = Descriptor("value")  # Use the descriptor for the 'value' attribute
 
 class DynamicClass:
     """
@@ -149,4 +129,42 @@ class DynamicClass:
             value: The value of the attribute.
         """
         setattr(self, name, value)  # Dynamically set attribute
+        
+        
+        
+import pytest
+
+class Descriptor(object):
+    def __init__(self, attr_name=None):
+        self.attr_name = attr_name
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        return instance.__dict__.get(self.attr_name)
+
+    def __set__(self, instance, value):
+        if not isinstance(value, int) or value <= 0:
+            # Remove the existing value if validation fails
+            if self.attr_name in instance.__dict__:
+                del instance.__dict__[self.attr_name]
+            raise ValueError("Attribute must be a positive integer.")
+        instance.__dict__[self.attr_name] = value
+
+class ValidatedAttribute(object):
+    value = Descriptor("value")  # Associate 'value' with the descriptor
+
+
+def test_validated_attribute():
+    validated_attr = ValidatedAttribute()
+    print(validated_attr.__dict__)
+    validated_attr.value = 100  # Setting a valid value
+    assert validated_attr.value == 100
+    print(validated_attr.__dict__)
+
+    with pytest.raises(ValueError) as ofc:
+        validated_attr.value = -10  # Now, the ValueError will be caught
+    
+   
+
         

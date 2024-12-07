@@ -33,11 +33,8 @@ def test_dynamic_class():
 def test_validated_attribute():
     validated_attr = ValidatedAttribute()
     validated_attr.value = 100
-    print(validated_attr.value)
     assert validated_attr.value == 100
     validated_attr.value = -10
-    print(validated_attr.value)
-
     with pytest.raises(ValueError):
         validated_attr.value = -10  # Should raise error for negative value
 test_person()
