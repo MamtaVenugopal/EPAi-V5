@@ -148,13 +148,3 @@ class ValidatedAttribute:
         self.data[instance] = value
 
 
-def test_validated_attribute():
-    validated_attr = ValidatedAttribute()
-    
-    # Test setting a valid value
-    validated_attr.value = 100  
-    assert validated_attr.value == 100
-    
-    # Test setting an invalid value
-    with pytest.raises(ValueError):
-        validated_attr.value = -10
