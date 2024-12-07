@@ -19,6 +19,7 @@ jobs:
             
     - name: Run tests
       run: |
-           pytest --maxfail=1 --disable-warnings -q
            pytest S22/test_S22.py
+           pytest --maxfail=1 --disable-warnings -q
+           
           
