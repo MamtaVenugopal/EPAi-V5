@@ -1,5 +1,5 @@
 import pytest
-from S22.my_classes import Person, Student, Professor, Employee, StudentProfessor, Location
+from my_classes import Person, Student, Professor, Employee, StudentProfessor, Location
 
 def test_person_details():
     person = Person("Alice", 30, "Engineer")
