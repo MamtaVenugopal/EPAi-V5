@@ -1,4 +1,5 @@
 import datetime
+from weakref import WeakKeyDictionary
 from math import pi
 class Person:
     def __init__(self, first_name, last_name, birth_year, base_salary = 50000, bonus = 10):
@@ -130,32 +131,30 @@ class DynamicClass:
         """
         setattr(self, name, value)  # Dynamically set attribute
         
-        
-        
-import pytest
+ 
 
-class Descriptor(object):
-    def __init__(self, attr_name=None):
-        self.attr_name = attr_name
+class ValidatedAttribute:
+    def __init__(self):
+        self.data = WeakKeyDictionary()
 
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        return instance.__dict__.get(self.attr_name)
+        return self.data.get(instance) # Use get to avoid KeyError
 
     def __set__(self, instance, value):
         if not isinstance(value, int) or value <= 0:
-            # Remove the existing value if validation fails
-            if self.attr_name in instance.__dict__:
-                del instance.__dict__[self.attr_name]
             raise ValueError("Attribute must be a positive integer.")
-        instance.__dict__[self.attr_name] = value
-
-class ValidatedAttribute(object):
-    value = Descriptor("value")  # Associate 'value' with the descriptor
+        self.data[instance] = value
 
 
-
-   
-
-        
+def test_validated_attribute():
+    validated_attr = ValidatedAttribute()
+    
+    # Test setting a valid value
+    validated_attr.value = 100  
+    assert validated_attr.value == 100
+    
+    # Test setting an invalid value
+    with pytest.raises(ValueError):
+        validated_attr.value = -10
