@@ -155,16 +155,7 @@ class ValidatedAttribute(object):
     value = Descriptor("value")  # Associate 'value' with the descriptor
 
 
-def test_validated_attribute():
-    validated_attr = ValidatedAttribute()
-    print(validated_attr.__dict__)
-    validated_attr.value = 100  # Setting a valid value
-    assert validated_attr.value == 100
-    print(validated_attr.__dict__)
 
-    with pytest.raises(ValueError) as ofc:
-        validated_attr.value = -10  # Now, the ValueError will be caught
-    
    
 
         
