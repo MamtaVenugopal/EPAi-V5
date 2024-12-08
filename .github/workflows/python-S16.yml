@@ -20,4 +20,4 @@ jobs:
         
     - name: Test with unittest
       run: |
-        python EPAi-V5/S16/test_cases.py
+        python -m unittest discover -s ./S16/test  -p 'test_*.py'
