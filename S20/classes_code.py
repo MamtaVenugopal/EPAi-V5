@@ -133,18 +133,36 @@ class DynamicClass:
         
  
 
-class ValidatedAttribute:
-    def __init__(self):
-        self.data = WeakKeyDictionary()
+class Descriptor:
+    """
+    A descriptor that validates the assigned value to be a positive integer.
+    """
+
+    def __init__(self, name=None):
+        """Initializes the ValidatedAttribute descriptor."""
+        self.name = name  # Store the attribute name
 
     def __get__(self, instance, owner):
+        """Retrieves the attribute value."""
         if instance is None:
-            return self
-        return self.data.get(instance) # Use get to avoid KeyError
+            return self  # Return descriptor instance when accessed on the class
+        return instance.__dict__.get(self.name)  # Get value from instance's __dict__
 
     def __set__(self, instance, value):
+        """Sets the attribute value after validation."""
         if not isinstance(value, int) or value <= 0:
             raise ValueError("Attribute must be a positive integer.")
-        self.data[instance] = value
+        instance.__dict__[self.name] = value  # Set value in instance's __dict__
+
+
+class ValidatedAttribute:
+    """
+    A class using the ValidatedAttribute descriptor.
+    """
+    value = Descriptor("value")  # Associate 'value' with the descriptor
+
+    def __init__(self, value=None):  # Initialize value to None by default
+        if value is not None:  # Only set the value if it's provided
+            self.value = value  # Use the descriptor to set the initial value
 
 
