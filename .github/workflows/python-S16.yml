@@ -15,9 +15,9 @@ jobs:
         python-version: '3.8'
     - name: Install dependencies
       run: |
-        python -m pip install unittest
+        
         python -m pip install --upgrade pip
         
     - name: Test with unittest
       run: |
-        python -m unittest discover -s ./S16/test  -p 'test_*.py'
+        python S16/test_cases.py
