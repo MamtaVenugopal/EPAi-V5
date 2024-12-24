@@ -73,6 +73,7 @@ class Member:
     def __init__(self,name,membership_level):
         self._name = name
         self._membership_level = membership_level
+      
 
     @property
     def name(self):
@@ -84,22 +85,21 @@ class Member:
             self._name = new_name
         else:
             raise ValueError("Invalid name")
-            
+
     @property
     def membership_level(self):
         return self._membership_level
     
     @membership_level.setter
     def membership_level(self, new_membership_level):
-        if new_membership_level in MembershipLevel:
+        if new_membership_level in MembershipLevel.__members__.values():
             self._membership_level = new_membership_level
         else:
-            raise ValueError("Invalid membership level")
+            raise InvalidMembershipError("INVALID_LEVEL")
     
     def get_fee(self):    
         
-        if self.membership_level not in MembershipLevel:
-             raise InvalidMembershipError("Invalid membership level.")
+        if self.membership_level not in MembershipLevel.__members__.values():
+             
+            raise InvalidMembershipError("INVALID_LEVEL")
         return self.membership_level.value
-
-
